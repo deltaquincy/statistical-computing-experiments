@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# Statistical Computing - Assignment
+# Statistical Computing Experiments
 # -----------------------------------------------------------
 # EM Algorithm for Bivariate Normal Data with Missing Values
 # Author: Zilong Liang
@@ -32,20 +32,20 @@ repeat {
   xsquare <- x ^ 2
   xsquare[m1:(m2-1), 1] <- x1square
   xsquare[m2:n, 2] <- x2square
-    
+
   # M-Step
   mu.new <- colSums(x) / n
   s11 <- sum(xsquare[, 1]) / n - mu.new[1] ^ 2
   s12 <- sum(x[, 1] * x[, 2]) / n - mu.new[1] * mu.new[2]
   s22 <- sum(xsquare[, 2]) / n - mu.new[2] ^ 2
   sigma.new <- matrix(c(s11, s12, s12, s22), ncol = 2, nrow = 2)
-  
+
   # Convergence Judgement
   iter <- iter + 1
   if (iter > iter.max) { break }
   err.sigma <- norm(sigma.new - sigma) / norm(sigma)
   if (err.sigma < tol) { break }
-  
+
   # Parameters iteration
   mu <- mu.new
   sigma <- sigma.new
